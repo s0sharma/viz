@@ -839,7 +839,8 @@
 
         const color = d3
           .scaleOrdinal()
-          .range(["#e41a1c", "#949494", "#4daf4a", "#984ea3"]);
+          .range(['#e41a1c', '#87CEEB', '#87CEEB', '#87CEEB', '#87CEEB', '#87CEEB', '#87CEEB', '#D3D3D3', '#999999'])
+          // .range(["#e41a1c", "#949494", "#4daf4a", "#984ea3"]);
 
         var points_g = svg
           .append("g")
@@ -893,10 +894,13 @@
           .attr("xlink:href", function (d) {
             if (d.type == "video") return "Images/video.jpg";
             else if (d.type == "pdf") return "Images/pdf.png";
+            else if (d.type == "Start") return "Images/Start.png";
+            else if (d.type == "Destination") return "Images/Destination.png";
             else if (d.type == "none") return "Images/GreenDot.png";
             else if (d.type == "Step") return "Images/Flag.png";
             else if (d.type == "learner") return "Images/BlueDot.png";
           })
+
           .attr("x", function (d) {
             return xScale(+d.ld[0]) - 10;
           })
@@ -930,6 +934,7 @@
           .enter()
           .append("path")
           .attr("fill", "none")
+          .attr("stroke-dasharray", "4, 4")   //Dashed line
           .attr("stroke", function (d) {
             return color(d[0]);
           })
