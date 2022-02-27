@@ -11,7 +11,6 @@
 </div>
 
 <svg id="my_dataviz" width="1500" height="600"></svg>
-
 <svg
   id="svg2"
   style="margin-top: 50; margin-left: 210; margin-bottom: 30"
@@ -21,8 +20,6 @@
 <script src="https://d3js.org/d3.v6.js"></script>
 
 <style>
-
-  
   div.tooltip {
     position: absolute;
     text-align: left;
@@ -469,22 +466,13 @@
         .attr("class", "line")
         .attr("clip-path", "url(#clip)");
 
-      // var sumstat = d3.nest() // nest function allows to group the calculation per level of a factor
-      //   .key(function (d) { return d.resource_name; })
-      //   .entries(data1);
-
-        // color palette
-  // var res = sumstat.map(function(d){ return d.key }) // list of group names
-  // var color = d3.scaleOrdinal()
-  //   .domain(res)
-  //   .range(['#e41a1c','#377eb8','#4daf4a','#984ea3','#ff7f00','#ffff33','#a65628','#f781bf','#999999'])
-
-
       const color = d3
         .scaleOrdinal()
-        .range(['#e41a1c','#87CEEB','#87CEEB','#87CEEB','#87CEEB','#87CEEB','#87CEEB','#D3D3D3','#999999'])
+        // .range(["#e41a1c", "#D3D3D3", "#377eb8", "#4daf4a", "#984ea3"]);
+        // .range(['#e41a1c', '#87CEEB', '#87CEEB', '#87CEEB', '#87CEEB', '#87CEEB', '#87CEEB', '#F6CF65', '#D3D3D3'])
+        // .range(['#e41a1c', '#87CEEB', '#F6CF65', '#D3D3D3'])
+        .range(['#e41a1c', '#377eb8', '#D3D3D3'])
 
-        // .range(["#e41a1c", "#A0A0A0", "#4daf4a", "#984ea3"]);
 
       var points_g = svg
         .append("g")
@@ -566,139 +554,19 @@
           return yScale(+d.ld[1]) + 10;
         });
 
-// ------------------------------------------------------------------------------------------
-      // let mouseOver = function (d) {
-      //   d3.selectAll("line")
-      //     .transition()
-      //     .duration(200)
-      //     .style("opacity", .5)
-      //   d3.select(this)
-      //     .transition()
-      //     .duration(200)
-      //     .style("opacity", 1)
-      //     .style("stroke", "green")
-      // }
-
-      // let mouseLeave = function (d) {
-      //   d3.selectAll("line")
-      //     .transition()
-      //     .duration(200)
-      //     .style("opacity", .8)
-      //   d3.select(this)
-      //     .transition()
-      //     .duration(200)
-      //     .style("stroke", "grey")
-      // }
-
-      // .style("stroke", "transparent")
-      //   // .attr("class", function (d) { return "line" })
-      //   .style("opacity", .8)
-      //   .on("mouseover", mouseOver)
-      //   .on("mouseleave", mouseLeave)
-
-      // var color = d3.scale.category20();
-      // link.style("stroke", function (d, i) { return color(i); });
-      // a helper function to create the series
-      // that will form the connector lines
-      var createSeries = function (name, data, color) {
-
-        // create and customize the connector series
-        var connectorSeries = map
-          .connector(data)
-          .name(name)
-          .fill(color)
-          .stroke({
-            color: color,
-            thickness: 2
-          });
-
-        // change the coloring of the connector line in the hovered state
-        connectorSeries
-          .hovered()
-          .stroke('1.5 #212121')
-          .fill('#212121');
-
-        // configure the arrow marker
-        connectorSeries
-          .markers()
-          .position('100%')
-          .fill(color)
-          .stroke({
-            color: color
-          })
-          .size(8);
-
-        // configure the arrow marker in the hovered state
-        connectorSeries
-          .hovered()
-          .markers()
-          .position('100%')
-          .size(10)
-          .fill('#212121')
-          .stroke('2 #455a64');
-
-        // set the labels for the source countries
-        connectorSeries
-          .labels()
-          .enabled(true)
-          .format(function () {
-            return this.getData('from');
-          });
-
-        // set the thickness of the connector line based on the series
-        if (name === 'More than 50,000') {
-          connectorSeries.startSize(5).endSize(2);
-        } else if (name === '40,000 to 50,000') {
-          connectorSeries.startSize(3.5).endSize(1.5);
-        } else if (name === '20,000 to 40,000') {
-          connectorSeries.startSize(3).endSize(1);
-        } else if (name === '16,000 to 20,000') {
-          connectorSeries.startSize(2).endSize(0.5);
-        } else {
-          connectorSeries.startSize(1).endSize(0);
-        }
-
-        // configure the settings for the legend items
-        connectorSeries
-          .legendItem()
-          .iconType('square')
-          .iconFill(color)
-          .iconStroke(false);
-
-      };
-// ------------------------------------------------------------------------------------------
       focus
         .selectAll("line")
         .data(groupData)
         .enter()
         .append("path")
-        // .attr("stroke-dasharray", function (d) {
-        //   if (d.type != "Step") { 
-        //     return 3, 3;
-        //   }
-        //   else{
-        //     return null;
-        //   }
-        // })
 
-        // .attr("stroke-dasharray", d => d.type === "Step" ? "none" : "3, 3")
-                  
+        .attr("stroke-dasharray", "4, 4")   //Dashed line
+
+
         .attr("fill", "none")
-
-
-
-      // .style("stroke", "transparent")
-        // .style("opacity", .8)
-        // .on("mouseover", mouseOver)
-        // .on("mouseleave", mouseLeave)
-
-      .attr("stroke-dasharray", "4, 4")   //Dashed line
-
-
         .attr("stroke", function (d) {
           return color(d[0]);
         })
-
         .attr("stroke-width", 1)
         .attr("d", function (d) {
           return d3
@@ -833,14 +701,12 @@
             "transform",
             "translate(" + margin.left + "," + margin.top + ")"
           )
-          
           .attr("class", "line")
           .attr("clip-path", "url(#clip)");
 
         const color = d3
           .scaleOrdinal()
-          .range(['#e41a1c', '#87CEEB', '#87CEEB', '#87CEEB', '#87CEEB', '#87CEEB', '#87CEEB', '#D3D3D3', '#999999'])
-          // .range(["#e41a1c", "#949494", "#4daf4a", "#984ea3"]);
+          .range(["#e41a1c", "#377eb8", "#4daf4a", "#984ea3"]);
 
         var points_g = svg
           .append("g")
@@ -894,13 +760,10 @@
           .attr("xlink:href", function (d) {
             if (d.type == "video") return "Images/video.jpg";
             else if (d.type == "pdf") return "Images/pdf.png";
-            else if (d.type == "Start") return "Images/Start.png";
-            else if (d.type == "Destination") return "Images/Destination.png";
             else if (d.type == "none") return "Images/GreenDot.png";
             else if (d.type == "Step") return "Images/Flag.png";
             else if (d.type == "learner") return "Images/BlueDot.png";
           })
-
           .attr("x", function (d) {
             return xScale(+d.ld[0]) - 10;
           })
@@ -934,7 +797,6 @@
           .enter()
           .append("path")
           .attr("fill", "none")
-          .attr("stroke-dasharray", "4, 4")   //Dashed line
           .attr("stroke", function (d) {
             return color(d[0]);
           })
@@ -1020,6 +882,5 @@
       });
     });
   });
-  console.log(groupData)
 
 </script>
