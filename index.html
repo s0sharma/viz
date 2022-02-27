@@ -706,7 +706,7 @@
 
         const color = d3
           .scaleOrdinal()
-          .range(["#e41a1c", "#377eb8", "#4daf4a", "#984ea3"]);
+          .range(["#e41a1c", "#D3D3D3", "#4daf4a", "#984ea3"]);
 
         var points_g = svg
           .append("g")
@@ -797,6 +797,7 @@
           .enter()
           .append("path")
           .attr("fill", "none")
+          .attr("stroke-dasharray", "4, 4")   //Dashed line
           .attr("stroke", function (d) {
             return color(d[0]);
           })
